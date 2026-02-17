@@ -1,0 +1,266 @@
+.app {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  color: #7f8c8d;
+  font-size: 0.95rem;
+}
+
+.dropzone {
+  border: 2px dashed #3498db;
+  border-radius: 8px;
+  padding: 3rem 2rem;
+  text-align: center;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 2rem;
+}
+
+.dropzone:hover {
+  background-color: #e9ecef;
+  border-color: #2980b9;
+}
+
+.dropzone.dragging {
+  background-color: #d4edff;
+  border-color: #2980b9;
+  border-style: solid;
+}
+
+.dropzone p {
+  margin: 0.5rem 0;
+  color: #495057;
+}
+
+.file-list {
+  margin-bottom: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.file-list h2 {
+  font-size: 1.1rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.file-item:last-child {
+  margin-bottom: 0;
+}
+
+.file-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.file-name {
+  font-weight: 500;
+  color: #2c3e50;
+  margin-bottom: 0.25rem;
+}
+
+.file-meta {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  margin-top: 0.25rem;
+}
+
+.badge.error {
+  background-color: #fee;
+  color: #c00;
+}
+
+.btn-remove {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.btn-remove:hover {
+  background-color: #c0392b;
+}
+
+.sheet-config {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.sheet-config h2 {
+  font-size: 1.1rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.input-group:last-child {
+  margin-bottom: 0;
+}
+
+.input-group label {
+  display: block;
+  text-align: left;
+  font-size: 0.9rem;
+  color: #495057;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.input-group input[type="text"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+
+.input-group input[type="text"]:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.btn-merge {
+  width: 100%;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 2rem;
+}
+
+.btn-merge:hover:not(:disabled) {
+  background-color: #2980b9;
+}
+
+.btn-merge:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.warnings {
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.warnings h3 {
+  font-size: 1rem;
+  color: #856404;
+  margin-bottom: 0.75rem;
+  margin-top: 0;
+}
+
+.warning-message {
+  font-size: 0.9rem;
+  color: #856404;
+  margin: 0.5rem 0;
+  text-align: left;
+}
+
+.results {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.results h2 {
+  font-size: 1.1rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.btn-download {
+  width: 100%;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.btn-download:hover {
+  background-color: #229954;
+}
+
+.btn-download:last-child {
+  margin-bottom: 0;
+}
+
+.result-info {
+  font-size: 0.95rem;
+  color: #2c3e50;
+  text-align: left;
+  padding: 0.5rem 0;
+  margin: 0.25rem 0;
+}
+
+.no-data {
+  color: #7f8c8d;
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+}
