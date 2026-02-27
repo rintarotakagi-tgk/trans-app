@@ -13,6 +13,7 @@ function App() {
   const [warnings, setWarnings] = useState([])
   const [isDragging, setIsDragging] = useState(false)
   const fileInputRef = useRef(null)
+  const resultsRef = useRef(null)
 
   const handleDragOver = (e) => {
     e.preventDefault()
@@ -99,7 +100,7 @@ function App() {
 
   // シートからフォーマット済みテキストを取得する関数
   // isSheet1: sheet1固有の加工処理を適用するかどうか
-  const sheetToFormattedArray = (sheet, fileName = '', isSheet1 = false) => {
+  const sheetToFormattedArray = (sheet, fileName = '', isSheet1 = false, workbook = null, sheetName = '') => {
     const range = XLSX.utils.decode_range(sheet['!ref'] || 'A1')
     // sheet1はA〜Q列（17列、インデックス0〜16）のみ使用
     const maxCol = isSheet1 ? Math.min(range.e.c, 16) : range.e.c
@@ -111,17 +112,31 @@ function App() {
         const cellAddress = XLSX.utils.encode_cell({ r: row, c: col })
         const cell = sheet[cellAddress]
 
+        let cellValue = ''
+
         if (cell) {
           const formattedValue = XLSX.utils.format_cell(cell)
-          let cellValue = formattedValue || ''
+          cellValue = formattedValue || ''
 
-          // <<と>>を含むセルは空白に変換
+          // <<と>>を含むセルは空白に変換（プレースホルダ除去）
           if (cellValue.includes('<<') && cellValue.includes('>>')) {
             cellValue = ''
           }
 
           // sheet1固有の加工
           if (isSheet1) {
+            // K列（金額、インデックス10）: V列（インデックス21）の値を直接読む
+            if (col === 10) {
+              const vCellAddr = XLSX.utils.encode_cell({ r: row, c: 21 })
+              const vCell = sheet[vCellAddr]
+              if (vCell) {
+                const vVal = (vCell.t === 'n' && vCell.v != null) ? vCell.v : Number(String(vCell.v).replace(/,/g, ''))
+                cellValue = (!isNaN(vVal) && vVal !== 0) ? String(vVal) : ''
+              } else {
+                cellValue = ''
+              }
+            }
+
             // H列（商品組番号、インデックス7）が0の場合は空白に変換
             if (col === 7 && (cellValue === '0' || cellValue === 0)) {
               cellValue = ''
@@ -132,11 +147,14 @@ function App() {
               cellValue = ''
             }
           }
-
-          rowData.push(cellValue)
-        } else {
-          rowData.push('')
         }
+
+        // sheet1: L列（消費税、インデックス11）が空の場合は0を入れる
+        if (isSheet1 && col === 11 && row > 0 && (!cellValue || String(cellValue).trim() === '')) {
+          cellValue = '0'
+        }
+
+        rowData.push(cellValue)
       }
       result.push(rowData)
     }
@@ -535,7 +553,7 @@ function App() {
       // Sheet1の処理
       if (workbook.SheetNames.includes(sheet1Name)) {
         const sheet = workbook.Sheets[sheet1Name]
-        const jsonData = sheetToFormattedArray(sheet, fileData.name, true)
+        const jsonData = sheetToFormattedArray(sheet, fileData.name, true, workbook, sheet1Name)
 
         if (jsonData.length > 0) {
           if (sheet1Headers.length === 0) {
@@ -593,6 +611,10 @@ function App() {
         fileName: output2Name
       }
     })
+
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }, 0)
   }
 
   const buildRows = (sheetKey) => {
@@ -786,7 +808,7 @@ function App() {
       )}
 
       {results && (
-        <div className="results">
+        <div className="results" ref={resultsRef}>
           <h2>結合結果</h2>
 
           {results.sheet1.data.length > 0 ? (
